@@ -74,4 +74,21 @@ class myObserver implements Observer{
 }
 ----
 
+*ObservableTimer*
+----------------
 
+Simple Timer that ticks on a javafx thread, and sends notify events at the given interval
+
+[source,groovy]
+----
+import io.endeios.ObservableTimer
+def ticker = new ObservableTimer(time)
+
+...(in a controller, implementing Observer, for a javafx panel)
+
+public void update(Observable obs, Object obj){
+    refresh()//refresh polling routine 
+}
+
+
+----
