@@ -1,5 +1,5 @@
 My Utils
-=======
+========
 
 Under package io.endeios
 
@@ -24,6 +24,7 @@ inFX{
 ----
 
 
+
 *XMLRPCClient*
 --------------
 
@@ -40,7 +41,7 @@ def sum = serverProxy.sum(41,1)
 ----
 
 *DirectoryNotifier*
------
+-------------------
 
 Notifies to an Observer when there is a change in a file of a given directory
 
