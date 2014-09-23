@@ -1,0 +1,41 @@
+apply plugin:'groovy'
+apply plugin:'application'
+
+project.ext.set('javaHome', System.env['JAVA_HOME'])
+
+repositories { mavenCentral() }
+
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.6'
+    compile 'org.apache.xmlrpc:xmlrpc-client:3.1.3'
+    compile 'org.codehaus.groovyfx:groovyfx:0.4.0'
+    compile 'org.postgresql:postgresql:9.3-1101-jdbc41'
+    compile "org.codehaus.gpars:gpars:1.2.1"
+    compile 'org.slf4j:slf4j-api:1.7.7'
+    compile 'org.slf4j:slf4j-simple:1.7.7'
+
+    compile files("${javaHome}/jre/lib/ext/jfxrt.jar")
+}
+
+
+task my_run(type: JavaExec) {
+    main = 'CopanWasplabTool'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+task makeDirs(description:'make all dirs for project setup') << {
+    def sources = [sourceSets.main, sourceSets.test]
+    sources*.allSource*.srcDirs.flatten().each { File srcDir ->
+        println "making $srcDir"
+        srcDir.mkdirs()
+    }
+}
+
+task wrap(type:Wrapper, description:"create a gradlew") {
+    gradleVersion = '2.1'
+}
+
+mainClassName = "io.endeios.Main"
+
+applicationDefaultJvmArgs = ["-Dgreeting.language=it"]
