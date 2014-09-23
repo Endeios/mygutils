@@ -3,6 +3,27 @@ My Utils
 
 Under package io.endeios
 
+*Utils*
+-------
+
+Useful Static imports, featuring
+
+### inFx
+
+simeple closure wrapped inside the Platform.runLater idiom
+
+[source,groovy]
+----
+import static io.endeios.Utils
+
+...(in non groovyfx thread)
+inFX{
+    label.text = "Hello!"
+    }
+
+----
+
+
 *XMLRPCClient*
 --------------
 
@@ -51,6 +72,5 @@ class myObserver implements Observer{
     }
 }
 ----
-
 
 
