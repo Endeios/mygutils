@@ -18,7 +18,39 @@ serverProxy.system.listMethods().each{println it}
 def sum = serverProxy.sum(41,1)
 ----
 
+*DirectoryNotifier*
+-----
 
+Notifies to an Observer when there is a change in a file of a given directory
+
+[source,groovy]
+----
+import java.nio.file.*
+import io.endeios.DirectoryNotifier
+
+def fs = FileSystems.getDefault()
+def path = fs.getPath('.')
+
+def dn = new DirectoryNotifier(path)
+println dn
+def observer = new myObserver()
+dn.addObserver(observer)
+def th = new Thread(dn,"notifierThread")
+println th
+th.setDaemon(false)
+th.start()
+
+
+
+
+class myObserver implements Observer{
+    public void update(Observable obs, Object obj){
+        if(obs instanceof DirectoryNotifier ){
+            println "File ${obj.file} has been updated with ${obj.data}"
+        }
+    }
+}
+----
 
 
 
