@@ -1,0 +1,82 @@
+import groovyx.gpars.actor.DynamicDispatchActor
+import javafx.collections.FXCollections
+
+
+import javafx.fxml.Initializable;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.event.ActionEvent;
+import groovy.sql.Sql
+import javafx.application.Platform;
+
+
+class QueryPanelController implements Initializable{
+
+    @FXML TextArea manualBarcodes
+    @FXML Label statusLine
+    @FXML TableView entryTable
+    @FXML TextArea queryLine
+    UpdaterActor updater;
+    
+    Sql dbwasplab 
+    public void initialize(URL location, ResourceBundle resources){
+        println "${location},${resources}"
+        statusLine.text = "Hello!"
+        queryLine.text = "SELECT * FROM media"
+        updater = new UpdaterActor(entryTable);
+        updater.start()
+    }
+
+    public void inTx(Closure c){
+        dbwasplab = Sql.newInstance('jdbc:postgresql://localhost:5432/test3','wasplab','wasplab','org.postgresql.Driver')
+        c()
+        dbwasplab.close()
+
+    }
+
+    public void executeQuery(ActionEvent event){
+        def query = queryLine.text
+        println "$query"
+        def res = null;
+        inTx{
+            queryLine.disabled = true
+            println "*"*20
+            res = dbwasplab.rows(query)
+            println "${res.class}"
+            updater << res
+            println "*"*20
+            queryLine.disabled = false
+        }
+    }
+}
+
+
+class UpdaterActor extends DynamicDispatchActor{
+   
+    TableView table;
+
+
+    UpdaterActor(TableView table){
+        this.table=table;
+    }
+
+    void onMessage(ArrayList list){
+        //println "$list"
+        inFX{
+            def data = FXCollections.observableArrayList(list)
+            def cols = table.getColumns()
+            cols.removeAll(cols)
+            if(list.size>0){
+                list[0].keySet().each{
+                    def col = new TableColumn("$it")
+                    col.setCellValueFactory(
+                        new GroovyResultValueFactory("$it")
+                    )
+                    cols.add(col)
+                }
+                table.items = data;
+            }
+        }
+    }
+
+}
