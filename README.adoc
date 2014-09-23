@@ -5,7 +5,8 @@ Under package io.endeios
 
 *XMLRPCClient*
 --------------
- Simple wrap for apache's xmlrpcclient library
+
+Simple wrap for apache's xmlrpcclient library
 
 [source,groovy]
 --- 
