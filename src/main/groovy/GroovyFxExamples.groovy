@@ -1,6 +1,14 @@
 import io.endeios.*
 
 import static groovyx.javafx.GroovyFX.start
+import groovy.sql.Sql
+import javafx.collections.FXCollections
+import javafx.scene.control.*
+
+def classLoader = Thread.currentThread().getContextClassLoader()
+
+datafixUri = classLoader.findResource("people.db")
+people = Sql.newInstance("jdbc:sqlite:${datafixUri.getFile()}",'','','org.sqlite.JDBC')
 
 
 start{
@@ -23,9 +31,23 @@ start{
                             //label
                             label(text:"Query field")
                             //textfield
-                            queryTextField=textField(prefColumnCount:20,height:140)
+                            queryTextField=textField(prefColumnCount:20,height:140,text:"Select * from person")
                             //button
-                            queryButton=button(text:"Query")
+                            queryButton=button(text:"Query",onAction:{event->
+                                def list = people.rows queryTextField.text 
+                                def data = FXCollections.observableArrayList(list)
+                                def cols = queryTableView.getColumns()
+                                cols.removeAll(cols)
+                                if(list.size>0){
+                                    list[0].keySet().each{
+                                        def col = new TableColumn("$it")
+                                        col.setCellValueFactory(new GroovyResultValueFactory("$it"))
+                                        cols.add(col)
+                                    }
+                                    queryTableView.items = data;
+                                }
+
+                           })
                         }
                         //tableView
                         queryTableView=tableView()
