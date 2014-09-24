@@ -92,3 +92,15 @@ public void update(Observable obs, Object obj){
 
 
 ----
+
+* GroovyResultValueFactory and ListResultValueFactory *
+------------------------------------------------------
+
+Adapter classes to help in laying out tables in groovyfx
+contests
+- GroovyResultValueFactory for those times in wich you need to use
+groovy's Sql
+
+- ListResultValueFactory for those times in wich you need to lay out lines of strings
+
+see src/main/GroovyFxExamples.groovy
