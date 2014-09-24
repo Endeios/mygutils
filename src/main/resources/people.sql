@@ -1,4 +1,4 @@
-create table person (id autoincrement integer primary key ,name text, description text,a_number integer);
+create table if not exists person (id integer primary key autoincrement ,name text, description text,a_number integer);
 
 insert into person (name,description,a_number) values ('Mr.Potato', 'the Potato',   10);
 insert into person (name,description,a_number) values ('Mr.Tomato', 'the Tomato',   12);
