@@ -1,5 +1,6 @@
 apply plugin:'groovy'
 apply plugin:'application'
+apply plugin: 'maven'
 
 project.ext.set('javaHome', System.env['JAVA_HOME'])
 
@@ -20,7 +21,7 @@ dependencies {
 
 
 task my_run(type: JavaExec) {
-    main = 'CopanWasplabTool'
+    main = 'GroovyFxExamples'
     classpath sourceSets.main.runtimeClasspath
 }
 
