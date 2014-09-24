@@ -15,6 +15,7 @@ dependencies {
     compile "org.codehaus.gpars:gpars:1.2.1"
     compile 'org.slf4j:slf4j-api:1.7.7'
     compile 'org.slf4j:slf4j-simple:1.7.7'
+    compile 'org.xerial:sqlite-jdbc:3.7.2'
 
     compile files("${javaHome}/jre/lib/ext/jfxrt.jar")
 }
