@@ -39,6 +39,9 @@ task wrap(type:Wrapper, description:"create a gradlew") {
     gradleVersion = '2.1'
 }
 
+project.group = "io.endeios"
+project.version = "1.0.0"
+
 mainClassName = "io.endeios.Main"
 
 applicationDefaultJvmArgs = ["-Dgreeting.language=it"]
