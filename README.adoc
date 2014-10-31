@@ -104,3 +104,18 @@ groovy's Sql
 - ListResultValueFactory for those times in wich you need to lay out lines of strings
 
 see src/main/GroovyFxExamples.groovy
+
+* WindowsRegistry *
+-------------------
+
+Windows Register utility reader
+Shamelessly uses the reg utility under windows
+[source,groovy]
+----
+import io.endeios.WindowsRegistry
+
+def vlcInstallDir = WindowsRegistry.readRegistry("HKEY_LOCAL_MACHINE\\SOFTWARE\\VideoLAN\\VLC","InstallDir")
+
+println vlcInstallDir
+
+----
